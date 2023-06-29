@@ -3,6 +3,8 @@
 
 @import 'vue-select.css';
 
+@import 'md-editor-v3.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

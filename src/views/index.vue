@@ -231,8 +231,8 @@
 				</div>
 
 
-				<Modal :activeModal="isAddNoteModal" @close="isAddNoteModal = false" :title="params.id ? '修改便签' : '新建便签'"
-					centered>
+				<Modal sizeClass="max-w-5xl" :activeModal="isAddNoteModal" @close="isAddNoteModal = false"
+					:title="params.id ? '修改便签' : '新建便签'" centered>
 					<form @submit.prevent="saveNote" class="dark:text-white-dark">
 						<div class="mb-5">
 							<label for="title">标题</label>
@@ -241,13 +241,13 @@
 						<div class="mb-5">
 							<label for="tag">便签标签</label>
 							<v-select id="tag" placeholder="选择便签标签" v-model="params.tag" :reduce="v => v.value" label="label"
-								:options="tagOptions">
+								:options="tagOption">
 							</v-select>
 						</div>
-						<div class="mb-5">
+						<div class="mb-5 min-h-[300px]">
 							<label for="desc">便签描述</label>
-							<textarea id="desc" rows="3" class="form-textarea resize-none min-h-[130px]" placeholder="便签描述"
-								v-model="params.description"></textarea>
+							<MdEditor id="desc" :toolbars="toolbarsOption" :theme="store.theme" v-model="params.description"
+								previewTheme="cyanosis" codeTheme="atom" />
 						</div>
 						<div class="flex justify-end items-center mt-8">
 							<button type="button" class="btn btn-outline-danger gap-2" @click="isAddNoteModal = false">取消</button>
@@ -267,7 +267,7 @@
 								'shadow-info': selectedNote.tag === 'social',
 								'shadow-danger': selectedNote.tag === 'important',
 							}">
-							{{ selectedNote.tag }}
+							{{ showTagTest(selectedNote.tag) }}
 						</button>
 						<button v-show="selectedNote.isFav" type="button" class="text-warning">
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +277,8 @@
 									stroke="currentColor" stroke-width="1.5"></path>
 							</svg>
 						</button>
-						<p class="dark:text-white-dark">{{ selectedNote.description }}</p>
+						<MdPreview :theme="store.theme" :modelValue="selectedNote.description" previewTheme="cyanosis"
+							codeTheme="atom" />
 					</div>
 
 					<template #footer>
@@ -294,6 +295,10 @@ import { ref, onMounted } from 'vue';
 import { nanoid } from 'nanoid'
 import { showMessage } from '@/utils/toast';
 import { confirmModal } from '@/utils/confirm'
+import { getTagIcon, showTagTest } from '@/utils/note'
+import { toolbarsOption, tagOption } from '@/constant/noteOptions'
+
+import { MdEditor, MdPreview } from 'md-editor-v3';
 import { useAppStore } from '@/stores/index';
 import { useMeta } from '@/composables/use-meta';
 useMeta({ title: 'Notes' });
@@ -306,25 +311,6 @@ const defaultParams = ref({
 	description: '',
 	tag: '',
 });
-
-const tagOptions = ref([
-	{
-		label: '个人',
-		value: 'personal'
-	},
-	{
-		label: '工作',
-		value: 'work'
-	},
-	{
-		label: '社交',
-		value: 'social'
-	},
-	{
-		label: '重要',
-		value: 'important'
-	}
-])
 
 const searchNoteWord = ref('');
 
@@ -341,8 +327,8 @@ const isShowNoteMenu = ref(false);
 const notesList = ref([
 	{
 		id: nanoid(),
-		title: 'Meeting with Kelly',
-		description: 'Curabitur facilisis vel elit sed dapibus sodales purus rhoncus.',
+		title: '网络对线宝典',
+		description: '当对方陈述观点时，无论观点对错，说“典”。当对方支持自己不支持的人或事时，说“孝”。',
 		date: '2023-5-23',
 		isFav: false,
 		tag: 'personal',
@@ -492,19 +478,4 @@ const deleteNote = () => {
 	isDeleteNoteModal.value = false;
 };
 
-const getTagIcon = (tag: string) => {
-	if (tag === 'personal') {
-		return 'heroicons:user';
-	}
-	if (tag === 'work') {
-		return 'heroicons:identification';
-	}
-	if (tag === 'social') {
-		return 'heroicons:sparkles';
-	}
-	if (tag === 'important') {
-		return 'heroicons:exclamation-circle';
-	}
-	return 'heroicons:arrow-path'
-}
 </script>
