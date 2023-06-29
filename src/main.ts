@@ -37,4 +37,7 @@ app.component('Icon', Icon);
 import Modal from '@/components/Modal.vue';
 app.component('Modal', Modal);
 
+import vSelect from 'vue-select'
+app.component('vSelect', vSelect)
+
 app.mount('#app');

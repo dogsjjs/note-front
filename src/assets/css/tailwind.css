@@ -1,11 +1,7 @@
 /* sweetalert */
 @import 'sweetalert.css';
 
-/* select2 */
-@import 'select2.css';
-
-/* form element*/
-@import 'form-elements.css';
+@import 'vue-select.css';
 
 @tailwind base;
 @tailwind components;
