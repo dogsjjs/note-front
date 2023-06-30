@@ -35,6 +35,7 @@ const tag: any = ref({});
 
 const saveTag = () => {
   store.saveTag(tag.value);
+  tag.value = {}
 }
 
 </script>
