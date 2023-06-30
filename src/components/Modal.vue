@@ -14,7 +14,7 @@
             :leave="noFade ? '' : 'duration-200 ease-in'" :leave-from="noFade ? '' : 'opacity-100 scale-100'"
             :leave-to="noFade ? '' : 'opacity-0 scale-95'">
             <DialogPanel
-              class="space-y-3 w-full transform overflow-hidden rounded-md panel p-5 border-0 text-left align-middle shadow-xl transition-all"
+              class="space-y-3 w-full transform rounded-md panel p-5 border-0 text-left align-middle shadow-xl transition-all"
               :class="sizeClass">
               <div class="relative overflow-hidden flex justify-between" :class="themeClass">
                 <h2 v-if="title" class="capitalize leading-6 tracking-wider font-medium text-base">
