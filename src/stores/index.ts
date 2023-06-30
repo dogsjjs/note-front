@@ -40,17 +40,20 @@ export const useAppStore = defineStore('app', {
 		},
 		// 检索便签
 		searchNotes() {
-			let res: any[];
-			if (this.selectedTab != 'fav') {
-				if (this.selectedTab != 'all') {
-					res = this.notes.filter((d) => d.tag === this.selectedTab);
+			if (this.notes) {
+				let res: any[];
+				if (this.selectedTab != 'fav') {
+					if (this.selectedTab != 'all') {
+						res = this.notes.filter((d) => d.tag === this.selectedTab);
+					} else {
+						res = this.notes
+					}
 				} else {
-					res = this.notes
+					res = this.notes.filter((d) => d.isFav);
 				}
-			} else {
-				res = this.notes.filter((d) => d.isFav);
+				this.filterdNotesList = res.filter((d: { title: string; description: string }) => d.title?.toLowerCase().includes(this.searchNoteWord) || d.description?.toLowerCase().includes(this.searchNoteWord));
 			}
-			this.filterdNotesList = res.filter((d: { title: string; description: string }) => d.title?.toLowerCase().includes(this.searchNoteWord) || d.description?.toLowerCase().includes(this.searchNoteWord));
+			return
 		},
 		// 切换当前选项卡
 		tabChanged(selectTab: string) {
@@ -78,9 +81,14 @@ export const useAppStore = defineStore('app', {
 		},
 		// 保存标签
 		saveTag(payload: Tag) {
+			this.tags = JSON.parse(localStorage.getItem('tags') as string) as Tag[] | [] as Tag[];
+			if (!this.tags) {
+				this.tags = [] as Tag[];
+			}
 			this.tags.push(payload);
 			this.isAddTagModal = false;
 			localStorage.setItem('tags', JSON.stringify(this.tags));
+			showMessage('成功保存标签！');
 		},
 		// 打开添加便签的模态框
 		openAddNoteModal() {
@@ -104,6 +112,10 @@ export const useAppStore = defineStore('app', {
 		},
 		// 保存便签
 		saveNote(payload: Note) {
+			this.notes = JSON.parse(localStorage.getItem('notes') as string) as Note[] | [] as Note[];
+			if(!this.notes) {
+				this.notes = [] as Note[]
+			}
 			this.notes.push(payload);
 			this.isAddNoteModal = false;
 			localStorage.setItem('notes', JSON.stringify(this.notes));
