@@ -17,7 +17,7 @@ export const useAppStore = defineStore('app', {
 			selectedTab: 'all',  // 已选择的tab
 			searchNoteWord: '',  // 搜索关键词
 			filterdNotesList: [] as Note[], // 筛选出来的便签
-			isViewNoteModal: false 
+			isViewNoteModal: false
 		}
 	},
 
@@ -84,6 +84,9 @@ export const useAppStore = defineStore('app', {
 		},
 		// 打开添加便签的模态框
 		openAddNoteModal() {
+			if (!this.editNoteFalg) {
+				this.noteParams = {} as Note;
+			}
 			this.isAddNoteModal = true;
 		},
 		// 打开修改便签的模态框
