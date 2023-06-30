@@ -20,7 +20,7 @@
                 <h2 v-if="title" class="capitalize leading-6 tracking-wider font-medium text-base">
                   {{ title }}
                 </h2>
-                <button @click="close" class="ltr:right-9 rtl:left-9 text-white-dark hover:text-dark outline-none">
+                <button @click="close" class="right-9 text-white-dark hover:text-dark outline-none">
                   <Icon icon="heroicons:x-mark" class="w-5 h-5" />
                 </button>
               </div>
