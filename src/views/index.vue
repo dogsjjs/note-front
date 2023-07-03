@@ -115,7 +115,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 import AddTagModal from '@/components/AddTagModal.vue'
 import AddNoteModal from '@/components/AddNoteModal.vue'
