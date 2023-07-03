@@ -7,6 +7,16 @@ const routes: RouteRecordRaw[] = [
 		component: () => import("@/views/index.vue")
 	},
 	{
+		path: '/note',
+		name: 'note',
+		component: () => import("@/views/app/note.vue")
+	},
+	{
+		path: '/scrumboard',
+		name: 'scrumboard',
+		component: () => import("@/views/app/scrumboard.vue")
+	},
+	{
 		path: "/:catchAll(.*)",
 		name: "404",
 		component: () => import("@/views/404.vue")

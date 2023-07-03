@@ -73,9 +73,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useAppStore } from '@/stores/index';
+import { useNoteStore } from '@/stores/app/note';
 import { storeToRefs } from 'pinia';
-const store = useAppStore();
+const store = useNoteStore();
 const { getTagColor, getTagIcon } = storeToRefs(store);
 defineProps(['note']);
 

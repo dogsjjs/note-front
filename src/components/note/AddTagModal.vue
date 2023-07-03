@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :activeModal="store.isAddTagModal" @close="store.isAddTagModal = false" title="新增标签" centered>
+    <Modal :activeModal="noteStore.isAddTagModal" @close="noteStore.isAddTagModal = false" title="新增标签" centered>
       <form @submit.prevent="saveTag" class="dark:text-white-dark space-y-3">
         <div>
           <label for="label">标签名称</label>
@@ -16,7 +16,7 @@
             :options="iconOption">
             <template #option="{ name }">
               <div class="flex gap-2 items-center justify-start">
-                <Icon :icon="name" /> <span>{{ name}}</span>
+                <Icon :icon="name" /> <span>{{ name }}</span>
               </div>
             </template>
           </v-select>
@@ -31,9 +31,10 @@
               </div>
             </template>
           </v-select>
+          <div class="text-danger text-secondary text-success text-warning text-info text-primary"></div>
         </div>
         <div class="flex justify-end items-center">
-          <button type="button" class="btn btn-outline-danger gap-2" @click="store.isAddTagModal = false">取消</button>
+          <button type="button" class="btn btn-outline-danger gap-2" @click="noteStore.isAddTagModal = false">取消</button>
           <button type="submit" class="btn btn-primary ml-4">新增</button>
         </div>
       </form>
@@ -43,13 +44,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { colorOption, iconOption } from '@/constant/noteOptions'
-import { useAppStore } from '@/stores/index';
-const store = useAppStore();
+import { useNoteStore } from '@/stores/app/note';
+const noteStore = useNoteStore();
 
 const tag: any = ref({});
 
 const saveTag = () => {
-  store.saveTag(tag.value);
+  noteStore.saveTag(tag.value);
   tag.value = {}
 }
 
