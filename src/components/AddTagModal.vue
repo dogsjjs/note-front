@@ -12,7 +12,14 @@
         </div>
         <div>
           <label for="icon">标签图标</label>
-          <input id="icon" type="text" placeholder="标签图标" class="form-input" v-model="tag.icon" />
+          <v-select id="icon" placeholder="选择标签图标" v-model="tag.icon" :reduce="v => v.name" label="name"
+            :options="iconOption">
+            <template #option="{ name }">
+              <div class="flex gap-2 items-center justify-start">
+                <Icon :icon="name" /> <span>{{ name}}</span>
+              </div>
+            </template>
+          </v-select>
         </div>
         <div>
           <label for="color">标签颜色</label>
@@ -35,7 +42,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { colorOption } from '@/constant/noteOptions'
+import { colorOption, iconOption } from '@/constant/noteOptions'
 import { useAppStore } from '@/stores/index';
 const store = useAppStore();
 
