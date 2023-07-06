@@ -10,7 +10,7 @@
         <span class="font-semibold ml-3">Scrumboard 开发中...</span>
       </router-link> -->
       <div class="main-logo flex items-center shrink-0 hover:text-info hover:cursor-pointer transition-all duration-300">
-        <Icon icon="fluent-mdl2:work-item" class="w-7 h-7" />
+        <Icon icon="octicon:project-symlink-24" class="w-7 h-7" />
         <span class="font-semibold ml-3">Scrumboard 开发中...</span>
       </div>
     </div>

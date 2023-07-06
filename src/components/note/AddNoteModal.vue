@@ -15,8 +15,8 @@
         </div>
         <div class="mb-5 min-h-[300px]">
           <label for="desc">便签描述</label>
-          <MdEditor id="desc" :toolbars="toolbarsOption" :theme="appStore.theme" v-model="noteStore.noteParams.description"
-            previewTheme="cyanosis" codeTheme="atom" />
+          <MdEditor id="desc" :toolbars="toolbarsOption" :theme="appStore.theme as Themes"
+            v-model="noteStore.noteParams.description" previewTheme="cyanosis" codeTheme="atom" />
         </div>
         <div class="flex justify-end items-center mt-8">
           <button type="button" class="btn btn-outline-danger gap-2" @click="noteStore.closeAddNoteModal()">取消</button>
@@ -28,8 +28,8 @@
 </template>
 <script lang="ts" setup>
 import { nanoid } from 'nanoid'
-import { toolbarsOption } from '@/constant/noteOptions'
-import { MdEditor } from 'md-editor-v3';
+import { toolbarsOption }  from '@/constant/noteOptions'
+import { MdEditor, Themes } from 'md-editor-v3';
 import { useNoteStore } from '@/stores/app/note';
 import { useAppStore } from '@/stores/index';
 const noteStore = useNoteStore();

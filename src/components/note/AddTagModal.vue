@@ -7,10 +7,6 @@
           <input id="label" type="text" placeholder="标签名称" class="form-input" v-model="tag.label" />
         </div>
         <div>
-          <label for="value">标签值</label>
-          <input id="value" type="text" placeholder="标签值/唯一标识" class="form-input" v-model="tag.value" />
-        </div>
-        <div>
           <label for="icon">标签图标</label>
           <v-select id="icon" placeholder="选择标签图标" v-model="tag.icon" :reduce="v => v.name" label="name"
             :options="iconOption">
@@ -43,6 +39,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { showMessage } from '@/utils/toast';
 import { colorOption, iconOption } from '@/constant/noteOptions'
 import { useNoteStore } from '@/stores/app/note';
 const noteStore = useNoteStore();
@@ -50,6 +47,17 @@ const noteStore = useNoteStore();
 const tag: any = ref({});
 
 const saveTag = () => {
+  if (!tag.value.label) {
+    showMessage('请输入标签标题！', 'error');
+    return;
+  }
+  if (!tag.value.icon) {
+    tag.value.icon = 'heroicons:archive-box';
+  }
+  if (!tag.value.color) {
+    tag.value.color = 'primary';
+  }
+  tag.value.value = tag.value.label;
   noteStore.saveTag(tag.value);
   tag.value = {}
 }

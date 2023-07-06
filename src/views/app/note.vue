@@ -3,7 +3,7 @@
 		<div class="flex gap-5 relative sm:h-[calc(90vh)] sm:w-[calc(80vw)] h-[calc(100vh)] w-[calc(100vw)]">
 
 			<div
-				class="panel p-4 flex-none w-[240px] absolute xl:relative z-1 space-y-4 h-full xl:h-auto hidden xl:block lg:rounded-r-md rounded-r-none overflow-hidden"
+				class="panel p-4 flex-none w-[240px] absolute xl:relative z-[6] space-y-4 h-full xl:h-auto hidden xl:block lg:rounded-r-md rounded-r-none overflow-hidden"
 				:class="{ 'hidden shadow': !noteStore.isShowNoteMenu, '!block h-full left-0': noteStore.isShowNoteMenu }">
 				<div class="flex flex-col h-full pb-16">
 					<div class="flex text-center items-center justify-between">

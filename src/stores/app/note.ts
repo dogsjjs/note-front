@@ -105,6 +105,7 @@ export const useNoteStore = defineStore('note', {
 			this.notes.push(payload);
 			this.isAddNoteModal = false;
 			localStorage.setItem('notes', JSON.stringify(this.notes));
+			this.isShowNoteMenu = false;
 			this.searchNotes();
 			showMessage('成功保存便签！');
 		},

@@ -63,10 +63,6 @@
 									drag-class="sortable-drag" :animation="200">
 									<div class="sortable-list" v-for="task in project.tasks" :key="project.id + '' + task.id">
 										<div class="shadow bg-[#f4f4f4] dark:bg-white-dark/20 p-3 pb-5 rounded-md mb-5 space-y-3 cursor-move">
-											<template v-if="task.image">
-												<img src="/assets/images/carousel1.jpeg" alt="images"
-													class="h-32 w-full object-cover rounded-md" />
-											</template>
 											<div class="text-base font-medium">{{ task.title }}</div>
 											<p class="break-all">{{ task.description }}</p>
 											<div class="flex gap-2 items-center flex-wrap">
@@ -304,4 +300,3 @@ const deleteConfirmModal = (projectId: any, task: any = null) => {
 	})
 };
 </script>
-@/composables/head@/utils/head

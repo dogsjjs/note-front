@@ -1,4 +1,6 @@
-export const toolbarsOption = [
+import { ToolbarNames } from "md-editor-v3";
+
+export const toolbarsOption : ToolbarNames[] = [
   'preview',
   'bold',
   'italic',
