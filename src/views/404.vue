@@ -8,6 +8,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { useMeta } from '@/composables/use-meta';
+import { useMeta } from '@/utils/head';
 useMeta({ title: '404' });
 </script>
+@/composables/head@/utils/head

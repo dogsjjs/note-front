@@ -6,6 +6,7 @@
 
 <script lang="ts" setup>
 import appLayout from '@/layouts/app-layout.vue';
-import { useMeta } from '@/composables/use-meta';
+import { useMeta } from '@/utils/head';
 useMeta({ title: 'Note' });
 </script>
+@/composables/head@/utils/head

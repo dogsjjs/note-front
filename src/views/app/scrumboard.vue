@@ -21,7 +21,7 @@
 				</div>
 			</div>
 
-			<!-- project list -->
+			<!-- 项目列表 -->
 			<div class="relative pt-5 sm:w-[calc(80vw)] w-full">
 				<div class="h-full -mx-2">
 					<div class="overflow-x-auto flex sm:flex-row flex-col items-start flex-nowrap gap-5 px-2 pb-2">
@@ -42,13 +42,13 @@
 												<template #content="{ close }">
 													<ul @click="close()" class="text-black dark:text-white-dark whitespace-nowrap">
 														<li>
-															<a href="javascript:;" @click="addEditProject(project)">Edit </a>
+															<a href="javascript:;" @click="addEditProject(project)">修改 </a>
 														</li>
 														<li>
-															<a href="javascript:;" @click="deleteProject(project)">Delete </a>
+															<a href="javascript:;" @click="deleteProject(project)">删除 </a>
 														</li>
 														<li>
-															<a href="javascript:;" @click="clearProjects(project)">Clear All
+															<a href="javascript:;" @click="clearProjects(project)">清除所有任务
 															</a>
 														</li>
 													</ul>
@@ -58,7 +58,7 @@
 									</div>
 								</div>
 
-								<!-- task list -->
+								<!-- 任务列表 -->
 								<draggable class="connect-sorting-content min-h-[150px]" group="default" ghost-class="sortable-ghost"
 									drag-class="sortable-drag" :animation="200">
 									<div class="sortable-list" v-for="task in project.tasks" :key="project.id + '' + task.id">
@@ -107,7 +107,7 @@
 								<div class="pt-3">
 									<button type="button" class="btn btn-primary mx-auto" @click="addEditTask(project.id)">
 										<Icon icon="heroicons:plus" class="w-5 h-5" />
-										Add Task
+										新增任务
 									</button>
 								</div>
 							</div>
@@ -118,7 +118,7 @@
 		</div>
 
 
-		<!-- add project modal -->
+		<!-- 新增项目模态框 -->
 
 		<Modal :activeModal="isAddProjectModal" @close="isAddProjectModal = false" :title="params.id ? '修改项目' : '新增项目'"
 			centered>
@@ -138,7 +138,7 @@
 			</form>
 		</Modal>
 
-		<!-- add task modal -->
+		<!-- 新增任务模态框 -->
 		<Modal :activeModal="isAddTaskModal" @close="isAddTaskModal = false" :title="paramsTask.id ? '修改任务' : '添加任务'"
 			centered>
 			<form @submit.prevent="saveTask">
@@ -171,11 +171,12 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { nanoid } from 'nanoid'
 import { VueDraggableNext as draggable } from 'vue-draggable-next';
 import { confirmModal } from '@/utils/confirm'
 import { showMessage } from '@/utils/toast';
 import { useAppStore } from '@/stores/index';
-import { useMeta } from '@/composables/use-meta';
+import { useMeta } from '@/utils/head';
 useMeta({ title: 'Scrumboard' });
 const appStore = useAppStore();
 const params = ref({
@@ -192,68 +193,7 @@ const paramsTask = ref({
 const selectedTask: any = ref(null);
 const isAddProjectModal = ref(false);
 const isAddTaskModal = ref(false);
-const projectList: any = ref([
-	{
-		id: 1,
-		title: 'In Progress',
-		tasks: [
-			{
-				projectId: 1,
-				id: 1,
-				title: 'Creating a new Portfolio on Dribble',
-				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-				date: ' 08 Aug, 2020',
-				tags: ['designing'],
-			},
-			{
-				projectId: 1,
-				id: 2,
-				title: 'Singapore Team Meet',
-				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-				date: ' 09 Aug, 2020',
-				tags: ['meeting'],
-			},
-		],
-	},
-	{
-		id: 2,
-		title: 'Pending',
-		tasks: [
-			{
-				projectId: 2,
-				id: 1,
-				title: 'Plan a trip to another country',
-				description: '',
-				date: ' 10 Sep, 2020',
-			},
-		],
-	},
-	{
-		id: 3,
-		title: 'Complete',
-		tasks: [
-			{
-				projectId: 3,
-				id: 1,
-				title: 'Dinner with Kelly Young',
-				description: '',
-				date: ' 08 Aug, 2020',
-			},
-			{
-				projectId: 3,
-				id: 2,
-				title: 'Launch New SEO Wordpress Theme ',
-				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				date: ' 09 Aug, 2020',
-			},
-		],
-	},
-	{
-		id: 4,
-		title: 'Working',
-		tasks: [],
-	},
-]);
+const projectList: any = ref([]);
 
 const addEditProject = (project: any = null) => {
 	setTimeout(() => {
@@ -271,42 +211,38 @@ const addEditProject = (project: any = null) => {
 
 const saveProject = () => {
 	if (!params.value.title) {
-		showMessage('Title is required.', 'error');
+		showMessage('请输入标题！', 'error');
 		return false;
 	}
 
 	if (params.value.id) {
-		//update project
+		// 更新项目
 		const project = projectList.value.find((d: any) => d.id === params.value.id);
 		project.title = params.value.title;
 	} else {
-		//add project
-		const lastId = projectList.value.length
-			? projectList.value.reduce((max: number, obj: any) => (obj.id > max ? obj.id : max), projectList.value[0].id)
-			: 0;
-
+		// 新增项目
 		const project = {
-			id: lastId + 1,
+			id: nanoid(),
 			title: params.value.title,
 			tasks: [],
 		};
 		projectList.value.push(project);
 	}
 
-	showMessage('Project has been saved successfully.');
+	showMessage('已保存项目！');
 	isAddProjectModal.value = false;
 };
 
 const deleteProject = (project: any) => {
 	projectList.value = projectList.value.filter((d: any) => d.id != project.id);
-	showMessage('Project has been deleted successfully.');
+	showMessage('删除项目成功！');
 };
 
 const clearProjects = (project: any) => {
 	project.tasks = [];
 };
 
-// task
+// 任务
 const addEditTask = (projectId: any, task: any = null) => {
 	paramsTask.value = {
 		projectId: null,
@@ -325,43 +261,37 @@ const addEditTask = (projectId: any, task: any = null) => {
 
 const saveTask = () => {
 	if (!paramsTask.value.title) {
-		showMessage('Title is required.', 'error');
+		showMessage('请输入任务标题！', 'error');
 		return false;
 	}
 
 	const project = projectList.value.find((d: any) => d.id === paramsTask.value.projectId);
 	if (paramsTask.value.id) {
-		//update task
+		// 更新任务
 		const task = project.tasks.find((d: any) => d.id === paramsTask.value.id);
 		task.title = paramsTask.value.title;
 		task.description = paramsTask.value.description;
 		task.tags = paramsTask.value.tags?.length > 0 ? paramsTask.value.tags.split(',') : [];
 	} else {
-		//add task
-		let maxid = 0;
-		if (project.tasks?.length) {
-			maxid = project.tasks.reduce((max: number, obj: any) => (obj.id > max ? obj.id : max), project.tasks[0].id);
-		}
-
+		// 新增任务
 		const today = new Date();
 		const dd = String(today.getDate()).padStart(2, '0');
-		const mm = String(today.getMonth()); //January is 0!
+		const mm = today.getMonth();
 		const yyyy = today.getFullYear();
-		const monthNames: any = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 		const task = {
 			projectId: paramsTask.value.projectId,
-			id: maxid + 1,
+			id: nanoid(),
 			title: paramsTask.value.title,
 			description: paramsTask.value.description,
-			date: dd + ' ' + monthNames[mm] + ', ' + yyyy,
+			date: `${yyyy}-${String(mm + 1).padStart(2, '0')}-${dd}`,
 			tags: paramsTask.value.tags?.length > 0 ? paramsTask.value.tags.split(',') : [],
 		};
 
 		project.tasks.push(task);
 	}
 
-	showMessage('Task has been saved successfully.');
+	showMessage('已保存任务！');
 	isAddTaskModal.value = false;
 };
 
@@ -374,3 +304,4 @@ const deleteConfirmModal = (projectId: any, task: any = null) => {
 	})
 };
 </script>
+@/composables/head@/utils/head

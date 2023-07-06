@@ -24,7 +24,7 @@ const head = createHead();
 app.use(head);
 
 // set default settings
-import appSetting from '@/app-setting';
+import appSetting from '@/appSetting';
 appSetting.init();
 
 // popper

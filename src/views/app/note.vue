@@ -70,7 +70,7 @@
 						<Icon icon="heroicons:tag" class="w-5 h-5 mr-1" />
 						新增标签
 					</button>
-					<button class="btn btn-primary w-full" type="button" @click="noteStore.openAddNoteModal()">
+					<button v-if="noteStore.tags" class="btn btn-primary w-full" type="button" @click="noteStore.openAddNoteModal()">
 						<Icon icon="heroicons:plus" class="w-5 h-5 mr-1" />
 						新增便签
 					</button>
@@ -121,7 +121,7 @@ import AddTagModal from '@/components/note/AddTagModal.vue'
 import AddNoteModal from '@/components/note/AddNoteModal.vue'
 import ViewNoteModal from '@/components/note/ViewNoteModal.vue'
 import Note from '@/components/note/Note.vue'
-import { useMeta } from '@/composables/use-meta';
+import { useMeta } from '@/utils/head';
 useMeta({ title: 'Notes' });
 
 import { useNoteStore } from '@/stores/app/note';
@@ -134,3 +134,4 @@ onMounted(() => {
 });
 
 </script>
+@/composables/head@/utils/head
